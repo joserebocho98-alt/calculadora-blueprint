@@ -6,37 +6,133 @@
   <title>Calculadora de Blueprints</title>
 
   <style>
+    :root{
+      --white: rgba(255,255,255,0.95);
+      --glass: rgba(255,255,255,0.14);
+      --border: rgba(255,255,255,0.25);
+      --shadow: rgba(0,0,0,0.35);
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
+      font-family: "Segoe UI", Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      color: #ffffff;
+
+      /* FUNDO (troca este link por uma imagem tua se quiseres) */
+      background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url("https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1600&q=60")
+        no-repeat center center fixed;
+      background-size: cover;
     }
+
     .container {
-      max-width: 420px;
-      margin: 40px auto;
-      background: #020617;
-      padding: 20px;
-      border-radius: 12px;
+      max-width: 460px;
+      margin: 60px auto;
+      padding: 26px;
+      border-radius: 20px;
+
+      /* Glassmorphism */
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 35px var(--shadow);
     }
+
     h1 {
       text-align: center;
+      margin: 0 0 20px;
+      font-weight: 800;
+      letter-spacing: 1px;
     }
+
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 14px;
+      font-size: 14px;
+      opacity: 0.95;
     }
+
     input {
       width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border-radius: 6px;
+      padding: 12px 12px;
+      margin-top: 6px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.08);
+      outline: none;
+      font-size: 16px;
+
+      background: var(--white);
+      color: #000;
+      box-sizing: border-box;
+    }
+
+    input:focus{
+      border-color: rgba(255,255,255,0.35);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.18);
+    }
+
+    hr {
+      margin: 18px 0;
       border: none;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.35);
     }
+
     .result {
-      margin-top: 15px;
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 15px;
     }
-    .result p {
-      margin: 6px 0;
+
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .row .left{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      opacity: 0.95;
+    }
+
+    .row .value{
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* Logo BELLA CRUZ (dentro do card) */
+    .logo {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      opacity: 0.9;
+      text-transform: uppercase;
+    }
+
+    .sub {
+      text-align:center;
+      opacity:0.75;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* Mobile */
+    @media (max-width: 520px){
+      .container{ margin: 30px 12px; }
+      .logo{ font-size: 24px; }
     }
   </style>
 </head>
@@ -44,65 +140,89 @@
 <body>
   <div class="container">
     <h1>Calculadora de Blueprints</h1>
+    <div class="sub">Bella Cruz</div>
 
     <label>Blueprint Leve</label>
-    <input type="number" id="leve" value="0">
+    <input type="number" id="leve" value="0" min="0">
 
     <label>Blueprint Média</label>
-    <input type="number" id="media" value="0">
+    <input type="number" id="media" value="0" min="0">
 
     <label>Blueprint Pesada</label>
-    <input type="number" id="pesada" value="0">
+    <input type="number" id="pesada" value="0" min="0">
 
     <hr>
 
     <div class="result">
-      <p>🧵 Tecido: <b id="tecido">0</b></p>
-      <p>📘 Folhas: <b id="folha">0</b></p>
-      <p>💰 Dinheiro: <b id="dinheiro">0</b></p>
-      <p>⏱️ Tempo: <b id="tempo">0</b> s</p>
+      <div class="row">
+        <div class="left">🧵 <span>Tecido</span></div>
+        <div class="value" id="tecido">0</div>
+      </div>
+
+      <div class="row">
+        <div class="left">📘 <span>Folhas</span></div>
+        <div class="value" id="folha">0</div>
+      </div>
+
+      <div class="row">
+        <div class="left">💰 <span>Dinheiro</span></div>
+        <div class="value" id="dinheiro">0</div>
+      </div>
+
+      <div class="row">
+        <div class="left">⏱️ <span>Tempo</span></div>
+        <div class="value"><span id="tempo">0</span> s</div>
+      </div>
     </div>
+
+    <div class="logo">BELLA CRUZ</div>
   </div>
 
-<script>
-  const crafts = {
-    leve: { tecido: 60, folha: 60, dinheiro: 25000, tempo: 10 },
-    media: { tecido: 100, folha: 100, dinheiro: 220000, tempo: 20 },
-    pesada: { tecido: 150, folha: 150, dinheiro: 750000, tempo: 30 }
-  };
+  <script>
+    const crafts = {
+      leve:   { tecido: 60,  folha: 60,  dinheiro: 25000,  tempo: 10 },
+      media:  { tecido: 100, folha: 100, dinheiro: 220000, tempo: 20 },
+      pesada: { tecido: 150, folha: 150, dinheiro: 750000, tempo: 30 }
+    };
 
-  function calcular() {
-    const leve = Number(document.getElementById("leve").value) || 0;
-    const media = Number(document.getElementById("media").value) || 0;
-    const pesada = Number(document.getElementById("pesada").value) || 0;
+    function calcular() {
+      const leve = Number(document.getElementById("leve").value) || 0;
+      const media = Number(document.getElementById("media").value) || 0;
+      const pesada = Number(document.getElementById("pesada").value) || 0;
 
-    document.getElementById("tecido").innerText =
-      leve * crafts.leve.tecido +
-      media * crafts.media.tecido +
-      pesada * crafts.pesada.tecido;
+      const tecido =
+        leve * crafts.leve.tecido +
+        media * crafts.media.tecido +
+        pesada * crafts.pesada.tecido;
 
-    document.getElementById("folha").innerText =
-      leve * crafts.leve.folha +
-      media * crafts.media.folha +
-      pesada * crafts.pesada.folha;
+      const folhas =
+        leve * crafts.leve.folha +
+        media * crafts.media.folha +
+        pesada * crafts.pesada.folha;
 
-    document.getElementById("dinheiro").innerText =
-      (
+      const dinheiro =
         leve * crafts.leve.dinheiro +
         media * crafts.media.dinheiro +
-        pesada * crafts.pesada.dinheiro
-      ).toLocaleString();
+        pesada * crafts.pesada.dinheiro;
 
-    document.getElementById("tempo").innerText =
-      leve * crafts.leve.tempo +
-      media * crafts.media.tempo +
-      pesada * crafts.pesada.tempo;
-  }
+      const tempo =
+        leve * crafts.leve.tempo +
+        media * crafts.media.tempo +
+        pesada * crafts.pesada.tempo;
 
-  document.querySelectorAll("input").forEach(input => {
-    input.addEventListener("input", calcular);
-    input.addEventListener("change", calcular);
-  });
+      document.getElementById("tecido").innerText = tecido.toLocaleString();
+      document.getElementById("folha").innerText = folhas.toLocaleString();
+      document.getElementById("dinheiro").innerText = dinheiro.toLocaleString();
+      document.getElementById("tempo").innerText = tempo.toLocaleString();
+    }
 
-  calcular();
-</script>
+    document.querySelectorAll("input").forEach(input => {
+      input.addEventListener("input", calcular);
+      input.addEventListener("change", calcular);
+    });
+
+    // calcular logo ao abrir
+    calcular();
+  </script>
+</body>
+</html>
