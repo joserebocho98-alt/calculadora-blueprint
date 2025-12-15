@@ -65,13 +65,47 @@
   </div>
 
   <script>
-    function calcular() {
-      const leve = Number(document.getElementById("leve").value);
-      const media = Number(document.getElementById("media").value);
-      const pesada = Number(document.getElementById("pesada").value);
+   <script>
+  const crafts = {
+    leve: { tecido: 60, folha: 60, dinheiro: 25000, tempo: 10 },
+    media: { tecido: 100, folha: 100, dinheiro: 220000, tempo: 20 },
+    pesada: { tecido: 150, folha: 150, dinheiro: 750000, tempo: 30 }
+  };
 
-      document.getElementById("tecido").innerText =
-        leve * 60 + media * 100 + pesada * 150;
+  function calcular() {
+    const leve = Number(document.getElementById("leve").value) || 0;
+    const media = Number(document.getElementById("media").value) || 0;
+    const pesada = Number(document.getElementById("pesada").value) || 0;
 
-      document.getElementById("folha").innerText =
-        leve * 60 + media * 100
+    document.getElementById("tecido").innerText =
+      leve * crafts.leve.tecido +
+      media * crafts.media.tecido +
+      pesada * crafts.pesada.tecido;
+
+    document.getElementById("folha").innerText =
+      leve * crafts.leve.folha +
+      media * crafts.media.folha +
+      pesada * crafts.pesada.folha;
+
+    document.getElementById("dinheiro").innerText =
+      (
+        leve * crafts.leve.dinheiro +
+        media * crafts.media.dinheiro +
+        pesada * crafts.pesada.dinheiro
+      ).toLocaleString();
+
+    document.getElementById("tempo").innerText =
+      leve * crafts.leve.tempo +
+      media * crafts.media.tempo +
+      pesada * crafts.pesada.tempo;
+  }
+
+  // recalcular sempre que muda um valor
+  document.querySelectorAll("input").forEach(input => {
+    input.addEventListener("input", calcular);
+    input.addEventListener("change", calcular);
+  });
+
+  // calcular logo ao abrir a página
+  calcular();
+</script>
