@@ -64,8 +64,7 @@
     </div>
   </div>
 
-  <script>
-   <script>
+<script>
   const crafts = {
     leve: { tecido: 60, folha: 60, dinheiro: 25000, tempo: 10 },
     media: { tecido: 100, folha: 100, dinheiro: 220000, tempo: 20 },
@@ -100,12 +99,10 @@
       pesada * crafts.pesada.tempo;
   }
 
-  // recalcular sempre que muda um valor
   document.querySelectorAll("input").forEach(input => {
     input.addEventListener("input", calcular);
     input.addEventListener("change", calcular);
   });
 
-  // calcular logo ao abrir a página
   calcular();
 </script>
